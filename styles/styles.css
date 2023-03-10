@@ -21,3 +21,15 @@ Styles used for labels and input fields in boot strap columns
 #response-after-edited-car {
   margin-top: 3 em;
 }
+
+
+#menu .nav-item {
+  margin-right: 20px;
+}
+
+#menu .nav-item:last-child {
+  margin-right: 0;
+}
+
+
+

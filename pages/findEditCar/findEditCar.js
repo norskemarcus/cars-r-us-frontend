@@ -1,31 +1,32 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors, makeOptions } from "../../utils.js";
+import { handleHttpErrors, makeOptions, encode } from "../../utils.js";
 
 //Add id to this URL to get a single user
 const URL = `${API_URL}/cars/`;
 
 export async function initFindEditCar(match) {
   document.querySelector("#btn-submit-edited-car").onclick = editCar;
-
   document.querySelector("#btn-fetch-car").onclick = fetchCarData;
+
   if (match?.params?.id) {
     const id = match.params.id;
+
     try {
       renderCar(id);
+      document.querySelector("#btn-delete-car").onclick = deleteCarById;
     } catch (err) {
       document.getElementById("error").innerText =
         "Could not find car with ID: " + id;
     }
-
-    document.querySelector("#btn-delete-car").onclick = deleteCarById;
   }
 
   const navigoRoute = "find-edit-car";
 
-  // bad name, doesn't fetch here!
+  // The fetch is in renderCar
   async function fetchCarData() {
-    document.getElementById("error").innerText = "";
-    const id = document.getElementById("car-id-input").value;
+    document.querySelector("#error").innerText = "";
+
+    const id = encode(document.getElementById("car-id-input").value);
 
     if (!id) {
       document.getElementById("error").innerText = "Please provide an id";
@@ -40,14 +41,14 @@ export async function initFindEditCar(match) {
         updateBrowserURL: true,
       });
     } catch (err) {
-      console.log(err.message);
+      document.getElementById("error").innerText =
+        "Could not find car with ID: " + id;
     }
   }
 
   async function renderCar(id) {
     try {
-      const car = await fetch(URL + id).then((res) => res.json());
-      document.getElementById("car-id-input").value = "";
+      const car = await fetch(URL + id).then(handleHttpErrors);
 
       //jsonplaceholder returns an empty object for users not found, NOT an error
       if (Object.keys(car).length === 0) {
@@ -72,7 +73,7 @@ export async function initFindEditCar(match) {
     const brandEdit = document.querySelector("#brand").value;
     const modelEdit = document.querySelector("#model").value;
     const priceEdit = document.querySelector("#price-pr-day").value;
-    const bestDiscount = document.querySelector("#bestDiscount").value;
+    const bestDiscount = document.querySelector("#best-discount").value;
 
     const bodyToEdit = {
       id: idNotEdit,
@@ -86,13 +87,7 @@ export async function initFindEditCar(match) {
 
     await fetch(URL + idNotEdit, options);
 
-    document.querySelector("#car-id").value = "";
-    document.querySelector("#brand").value = "";
-    document.querySelector("#model").value = "";
-    document.querySelector("#price-pr-day").value = "";
-    document.querySelector("#bestDiscount").value = "";
-
-    document.querySelector("#edited-car").innerText =
+    document.querySelector("#response").innerText =
       "The car with id " + idNotEdit + " is successfully edited";
   }
 }
@@ -108,7 +103,13 @@ async function deleteCarById() {
 
   try {
     await fetch(URL + carId, options).then(handleHttpErrors);
+    document.querySelector("#deleted-car-form").reset();
   } catch (error) {
-    console.log("ERROR");
+    // error message to user
+    document.querySelector("#error").innerText = error.message;
   }
+
+  // Respons til bruger om at ændringer er foretaget!
+  document.querySelector("#response").innerText =
+    "Car with id " + carId + " is deleted";
 }

@@ -8,7 +8,7 @@ export async function initCars() {
   document.querySelector("#table-rows").onclick = showCarDetails;
 }
 
-async function getAllCars() {
+export async function getAllCars() {
   try {
     const cars = await fetch(URL).then(handleHttpErrors);
     makeTable(cars);

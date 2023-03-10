@@ -39,5 +39,17 @@ async function addMember() {
 
   const options = makeOptions("POST", body);
 
-  await fetch(URL, options);
+  try {
+    await fetch(URL, options);
+
+    // Form element, reset
+    document.querySelector("#form").reset();
+
+    // Respons til bruger om at bruger er oprettet!
+    document.querySelector("#new-user").innerText =
+      "Member is successfully created ";
+  } catch (err) {
+    document.querySelector("#error").innerText =
+      "Something went wrong. Try again or contact us";
+  }
 }

@@ -13,13 +13,7 @@
         <tr>
           <th>Username</th>
           <th>Email</th>
-          <th>First name</th>
-          <th>Last name</th>
-          <th>Street</th>
-          <th>City</th>
-          <th>Zip</th>
-          <th>Created</th>
-          <th>Edited</th>
+          <th>Name</th>
           <th>Ranking</th>
           <th>&nbsp;</th>
         </tr>
@@ -27,6 +21,11 @@
       <tbody id="tbl-body"></tbody>
     </table>
     <p id="error" style="color: red"></p>
+    <image
+      id="spinner"
+      src="../../images/loading.gif"
+      style="width: 400px; display: none"
+    ></image>
   </div>
   <!-- Modal -->
   <div
@@ -52,55 +51,56 @@
           <div class="row">
             <div class="col-md-3"><span>Username:</span></div>
             <div class="col-md-9">
-              <p id="user-name"></p>
+              <p id="user-name" class="property" data-property="username"></p>
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3"><span>email:</span></div>
+            <div class="col-md-3"><span>Email:</span></div>
             <div class="col-md-9">
-              <p id="email"></p>
+              <p id="email" class="property" data-property="email"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-md-3"><span>First name:</span></div>
             <div class="col-md-9">
-              <p id="first-name"></p>
+              <p id="first-name" class="property" data-property="firstName"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-md-3"><span>Last name:</span></div>
             <div class="col-md-9">
-              <p id="last-name"></p>
+              <p id="last-name" class="property" data-property="lastName"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-md-3"><span>Street:</span></div>
             <div class="col-md-9">
-              <p id="street"></p>
+              <p id="street" class="property" data-property="street"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-md-3"><span>City:</span></div>
             <div class="col-md-9">
-              <p id="city"></p>
+              <p id="city" class="property" data-property="city"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-md-3"><span>Zip:</span></div>
             <div class="col-md-9">
-              <p id="zip"></p>
+              <p id="zip" class="property" data-property="zip"></p>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-3"><span>Created:</span></div>
             <div class="col-md-9">
-              <p id="created"></p>
+              <p id="created" class="property" data-property="created"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-md-3"><span>Edited:</span></div>
             <div class="col-md-9">
-              <p id="edited"></p>
+              <p id="edited" class="property" data-property="edited"></p>
             </div>
           </div>
           <div class="row">
