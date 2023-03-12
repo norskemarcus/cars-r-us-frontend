@@ -2,7 +2,12 @@
   <h2>Show all cars here, with details allowed for Admins</dt>
   </h2>
 
-  <table class="table">
+  <br />
+  <input type="text" id="filtering-cars-by-brand" placeholder="Filter by brand" />
+  <br />
+  <hr />
+
+  <table class="table" id="cars-table">
     <thead>
       <tr>
         <th>ID</th>
@@ -10,6 +15,7 @@
         <th>Model</th>
         <th>Price pr. day</th>
         <th>Best-discount</th>
+        <th>Details</th>
       </tr>
     </thead>
     <tbody id="table-rows" />

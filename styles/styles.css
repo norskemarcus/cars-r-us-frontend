@@ -11,7 +11,6 @@ Styles used for labels and input fields in boot strap columns
 }
 
 .row input {
-  margin-top: 1em;
   padding: 0.35em;
   border-radius: 4px;
   width: 100%;
@@ -22,7 +21,6 @@ Styles used for labels and input fields in boot strap columns
   margin-top: 3 em;
 }
 
-
 #menu .nav-item {
   margin-right: 20px;
 }
@@ -31,5 +29,6 @@ Styles used for labels and input fields in boot strap columns
   margin-right: 0;
 }
 
-
-
+#navbar-index{¨
+background-color: silver;
+}

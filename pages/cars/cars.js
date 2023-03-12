@@ -3,37 +3,73 @@ import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
 
 const URL = API_URL + "/cars"; //adder admin når det fungerer
 
-export async function initCars() {
+export function initCars() {
   getAllCars();
   document.querySelector("#table-rows").onclick = showCarDetails;
+  filterCarsByBrand();
+  /* document
+    .getElementById("filtering-cars-by-brand")
+    .addEventListener("input", filterCarsByBrand); */
 }
 
-export async function getAllCars() {
+async function getAllCars() {
   try {
-    const cars = await fetch(URL).then(handleHttpErrors);
-    makeTable(cars);
+    const data = await fetch(URL).then(handleHttpErrors);
+    return data;
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 }
 
-function makeTable(cars) {
-  const tableRows = cars
-    .map(
-      (car) => `
+async function filterCarsByBrand() {
+  const carsTable = document.getElementById("cars-table");
+  const brandInput = document.getElementById("filtering-cars-by-brand");
+
+  brandInput.addEventListener("input", filterCarsByBrand);
+  const brand = brandInput.value.trim().toLowerCase();
+
+  const cars = await getAllCars();
+
+  const filteredCars = cars.filter((car) =>
+    car.brand.toLowerCase().includes(brand)
+  );
+
+  makeTable(filteredCars);
+
+  const tableBody = carsTable.getElementsByTagName("tbody")[0];
+  tableBody.innerHTML = "";
+
+  const tableRows = filteredCars.map(
+    (car) => `
+        <tr>
+          <td>${car.id}</td>
+          <td>${car.brand}</td>
+          <td>${car.model}</td>
+          <td>${car.pricePrDay}</td>
+          <td>${car.bestDiscount}</td>
+          <td><button id="row-btn_${car.id}" type="button" class="btn btn-sm btn-secondary">Edit/delete car</button></td>
+        </tr>`
+  );
+
+  tableBody.innerHTML = tableRows.join("");
+}
+
+function makeTable(data) {
+  const tableRows = data.map(
+    (car) => `
 <tr>
 <td>${car.id}</td>
 <td>${car.brand}</td>
 <td>${car.model}</td>
 <td>${car.pricePrDay}</td>
 <td>${car.bestDiscount}</td>
-<td><button id="row-btn_${car.id}" type="button" class="btn btn-sm btn-secondary">Details</button></td>
+<td><button id="row-btn_${car.id}" type="button" class="btn btn-sm btn-secondary">Edit/delete car</button></td>
 </tr>`
-    )
-    .join("\n"); // Laver den om til en enkelt streng
+  );
 
+  const tableRowsString = tableRows.join("\n");
   document.querySelector("#table-rows").innerHTML =
-    sanitizeStringWithTableRows(tableRows);
+    sanitizeStringWithTableRows(tableRowsString);
 }
 
 async function showCarDetails(evt) {

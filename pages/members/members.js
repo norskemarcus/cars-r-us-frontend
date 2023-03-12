@@ -7,15 +7,76 @@ import { API_URL } from "../../settings.js";
 const URL = API_URL + "/members";
 
 export function initMembers() {
-  document.querySelector("#tbl-body").onclick = showMemberDetails;
-
   getAllMembers();
+  document.querySelector("#tbl-body").onclick = showMemberDetails;
+  filterMembersByUsername();
+  filterMembersByEmail();
+}
+
+async function filterMembersByUsername() {
+  const membersTable = document.getElementById("members-table");
+  const usernameInput = document.getElementById("username-input");
+
+  usernameInput.addEventListener("input", filterMembersByUsername);
+  const username = usernameInput.value.trim().toLowerCase();
+
+  const members = await getAllMembers();
+
+  const filteredMembers = members.filter((member) =>
+    member.username.toLowerCase().includes(username)
+  );
+  makeTable(filteredMembers);
+
+  const tableBody = membersTable.getElementsByTagName("tbody")[0];
+  tableBody.innerHTML = "";
+
+  const tableRows = filteredMembers.map(
+    (member) => `
+    <tr>                                
+      <td>${member.username}</td>              
+      <td>${member.email}</td>                     
+      <td>${member.firstName}  ${member.lastName} </td>
+      <td>${member.ranking}</td>
+      <td><button id="row-btn_details_${member.username}" type="button"  class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#member-details-modal">Details</button></td>
+      <td><button id="row-btn_delete_${member.username}" type="button"  class="btn btn-sm btn-danger">Delete</button></td>    
+    </tr>`
+  );
+  tableBody.innerHTML = tableRows.join("");
+}
+
+async function filterMembersByEmail() {
+  const membersTable = document.getElementById("members-table");
+  const emailInput = document.getElementById("email-input");
+
+  emailInput.addEventListener("input", filterMembersByEmail);
+  const email = emailInput.value.trim().toLowerCase();
+  const members = await getAllMembers();
+  const filteredMembers = members.filter((member) =>
+    member.email.toLowerCase().includes(email)
+  );
+  makeTable(filteredMembers);
+
+  const tableBody = membersTable.getElementsByTagName("tbody")[0];
+  tableBody.innerHTML = "";
+
+  const tableRows = filteredMembers.map(
+    (member) => `
+    <tr>                                
+      <td>${member.username}</td>              
+      <td>${member.email}</td>                     
+      <td>${member.firstName}  ${member.lastName} </td>
+      <td>${member.ranking}</td>
+      <td><button id="row-btn_details_${member.username}" type="button"  class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#member-details-modal">Details</button></td>
+      <td><button id="row-btn_delete_${member.username}" type="button"  class="btn btn-sm btn-danger">Delete</button></td>    
+    </tr>`
+  );
+  tableBody.innerHTML = tableRows.join("");
 }
 
 async function getAllMembers() {
   try {
     const data = await fetch(URL).then(handleHttpErrors);
-    makeTable(data);
+    return data;
   } catch (err) {
     console.log(err.message);
   }
@@ -29,11 +90,10 @@ function makeTable(data) {
       <td>${member.email}</td>                     
       <td>${member.firstName}</td>
       <td>${member.ranking}</td>
-      <td><button id="row-btn_details_${member.username}" type="button"  class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#member-details-modal">Details</button></td>
+      <td><button id="row-btn_details_${member.username}" type="button"  class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#member-details-modal">Details</button></td>
       <td><button id="row-btn_delete_${member.username}" type="button"  class="btn btn-sm btn-danger">Delete</button></td>    
     </tr>`
   );
-
   const tableRowsString = tableRows.join("\n");
   document.querySelector("#tbl-body").innerHTML =
     sanitizeStringWithTableRows(tableRowsString);
@@ -52,6 +112,7 @@ async function showMemberDetails(evt) {
   if (btnAction === "details") {
     try {
       const member = await fetch(URL + "/" + username).then(handleHttpErrors);
+
       document
         .querySelectorAll(".property")
         .forEach((field) => (field.innerText = member[field.dataset.property])); // kan også være value
