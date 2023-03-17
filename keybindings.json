@@ -1,0 +1,9 @@
+[
+  { "key": "cmd+t", "command": "workbench.action.q" },
+  { "key": "cmd+shift+v", "command": "workbench.view.scm" },
+  {
+    "key": "shift+cmd+a",
+    "command": "copilot-labs.use-brush-picker",
+    "when": "editorTextFocus"
+  }
+]

@@ -2,6 +2,7 @@ import {
   handleHttpErrors,
   sanitizeStringWithTableRows,
   makeOptions,
+  makeOptionsWithToken,
 } from "../../utils.js";
 import { API_URL } from "../../settings.js";
 const URL = API_URL + "/members";
@@ -9,8 +10,8 @@ const URL = API_URL + "/members";
 export function initMembers() {
   getAllMembers();
   document.querySelector("#tbl-body").onclick = showMemberDetails;
-  filterMembersByUsername();
-  filterMembersByEmail();
+  // filterMembersByUsername();
+  //filterMembersByEmail();
 }
 
 async function filterMembersByUsername() {
@@ -74,16 +75,18 @@ async function filterMembersByEmail() {
 }
 
 async function getAllMembers() {
+  const options = makeOptionsWithToken("GET", null, true);
+
   try {
-    const data = await fetch(URL).then(handleHttpErrors);
-    return data;
+    const members = await fetch(URL, options).then(handleHttpErrors);
+    makeTable(members);
   } catch (err) {
-    console.log(err.message);
+    document.getElementById("status").innerText = err.message;
   }
 }
 
-function makeTable(data) {
-  const tableRows = data.map(
+function makeTable(members) {
+  const tableRows = members.map(
     (member) => `
     <tr>                                
       <td>${member.username}</td>              

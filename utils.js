@@ -13,6 +13,24 @@ export function makeOptions(method, body) {
   return opts;
 }
 
+export function makeOptionsWithToken(method, body, addToken) {
+  const opts = {
+    method: method,
+    headers: {
+      "Content-type": "application/json",
+      Accept: "application/json",
+    },
+  };
+  if (body) {
+    opts.body = JSON.stringify(body);
+  }
+  if (addToken && localStorage.getItem("token")) {
+    opts.headers.Authorization = "Bearer " + localStorage.getItem("token");
+  }
+
+  return opts;
+}
+
 export function renderTemplate(template, contentId) {
   const content = document.getElementById(contentId);
   if (!content) {

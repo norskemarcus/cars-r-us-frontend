@@ -37,24 +37,20 @@
         </div>
         <div class="modal-body">
           <div>
-            <p style="font-style: italic">
-              With security enabled, and if this requires a user to be logged
-              in, username is not nessecary, since the server will know who the
-              currently logged in user is
-            </p>
             <div class="row">
-              <div class="col-md-3">
-                <label for="user-name">User name</label>
+              <div class="col-md-3 align-middle">
+                <label for="username-from-token">Username: </label>
               </div>
-              <div class="col-md-9">
-                <input id="user-name" placeholder="Enter your user name" />
+
+              <div class="col-md-9 align-middle">
+                <p id="username-from-token"></p>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-3 align-middle">
                 <label for="reservation-date">Date</label>
               </div>
-              <div class="col-md-9">
+              <div class="col-md-9 align-middle">
                 <input
                   id="reservation-date"
                   type="date"

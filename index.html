@@ -35,13 +35,17 @@
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul id="menu" class="navbar-nav me-auto"> <!-- Added me-auto class to move items to the left -->
-        <li class="nav-item dropdown">
+       
+        <div class = "menu-login" id="admin-only" style="display: flex; align-items: center; display : none">
+        <li class="nav-item dropdown admin">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             Cars (A)
           </a>
+
           <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="/find-edit-car" data-navigo>Find/Edit Car</a></li>
             <li><a class="dropdown-item" href="/add-car" data-navigo>Add Car</a></li>
@@ -54,7 +58,10 @@
         <li class="nav-item">
           <a class="nav-link" href="/members" data-navigo>Members(A)</a>
         </li>
-        <li class="nav-item dropdown">
+        </div>
+      
+
+        <li id="reservations-link" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             Reservation (M)
@@ -66,17 +73,24 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto"> <!-- Added ms-auto class to move items to the right -->
-        <li class="nav-item">
-          <a class="nav-link" href="/login" data-navigo>Login</a>
+       <li id="login-name" class="nav-item">
+        <a href="#" class="nav-link" >You are logged in as: <span id="span-id"></span></a>
+       </li>
+        <li id="login-id" class="nav-item">
+          <a id="login-link" class="nav-link" href="/login" data-navigo>Login</a>
+        </li>
+        <li id="logout-id" class="nav-item" style="display:none">
+          <a class="nav-link" href="/logout" data-navigo>Logout</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/signup" data-navigo>Sign up</a>
+          <a id="signup-link" class="nav-link" href="/signup" data-navigo>Sign up</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
+<!-- Siden som kommer op ---->
   <div id="content" style="margin:5%;margin-top:3%;"></div>
   </div>
 

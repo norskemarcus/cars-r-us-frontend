@@ -1,7 +1,11 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
+import {
+  handleHttpErrors,
+  makeOptionsWithToken,
+  sanitizeStringWithTableRows,
+} from "../../utils.js";
 
-const URL = API_URL + "/reservations"; //adder admin når det fungerer
+const URL = API_URL + "/reservations";
 
 export async function initListReservationsAll() {
   fetchAllReservations();
@@ -9,10 +13,18 @@ export async function initListReservationsAll() {
 
 export async function fetchAllReservations() {
   try {
-    const reservations = await fetch(API_URL + "/reservations").then(
+    const options = makeOptionsWithToken("GET", null, true);
+
+    const reservations = await fetch(API_URL + "/reservations", options).then(
       handleHttpErrors
     );
-    const cars = await fetch(API_URL + "/cars").then(handleHttpErrors);
+
+    document.querySelector("#user-reservation").innerText =
+      localStorage.getItem("user");
+
+    const cars = await fetch(API_URL + "/cars/user", options).then(
+      handleHttpErrors
+    );
 
     // Create a map of car id to car object
     const carMap = new Map(cars.map((car) => [car.id, car]));
@@ -22,11 +34,11 @@ export async function fetchAllReservations() {
         const car = carMap.get(reservation.carId);
         return `
             <tr>
-              <td>${reservation.carId}</td>
-              <td>${car.brand}</td>
-              <td>${car.model}</td>
-              <td>${reservation.rentalDate}</td>
-              <td>${car.pricePrDay}</td>
+            <!--  <td>${reservation.carId}</td>  -->
+            <td>${reservation.rentalDate}</td>
+            <td>${car.brand}</td>
+            <td>${car.model}</td>
+            <td>${car.pricePrDay}</td>
             </tr>`;
       })
       .join("\n");
@@ -34,6 +46,6 @@ export async function fetchAllReservations() {
     document.querySelector("#tablerows").innerHTML =
       sanitizeStringWithTableRows(tableRows);
   } catch (err) {
-    console.log(err);
+    document.getElementById("error").innerText = err.message;
   }
 }

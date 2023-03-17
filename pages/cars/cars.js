@@ -1,23 +1,56 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors, sanitizeStringWithTableRows } from "../../utils.js";
+import {
+  handleHttpErrors,
+  makeOptions,
+  makeOptionsWithToken,
+  sanitizeStringWithTableRows,
+} from "../../utils.js";
 
-const URL = API_URL + "/cars"; //adder admin når det fungerer
+const URL = API_URL + "/cars/admin";
 
 export function initCars() {
   getAllCars();
+
   document.querySelector("#table-rows").onclick = showCarDetails;
+
   filterCarsByBrand();
-  /* document
+  document
     .getElementById("filtering-cars-by-brand")
-    .addEventListener("input", filterCarsByBrand); */
+    .addEventListener("input", filterCarsByBrand);
 }
 
 async function getAllCars() {
   try {
-    const data = await fetch(URL).then(handleHttpErrors);
-    return data;
+    const options2 = makeOptionsWithToken("GET", null, true);
+
+    /*   try {
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: +"Bearer " + localStorage.getItem("token"),
+      },
+    }; */
+
+    const cars = await fetch(URL, options2).then(handleHttpErrors);
+
+    const tableRows = cars
+      .map(
+        (car) => `
+          <tr>
+            <td>${car.id}</td>
+            <td>${car.brand}</td>
+            <td>${car.model}</td>
+            <td>${car.pricePrDay}</td>
+            <td>${car.bestDiscount}</td>
+            <td><button id="row-btn_${car.id}" type="button" class="btn btn-sm btn-secondary">Edit/delete car</button></td>
+          </tr>`
+      )
+      .join("");
+
+    document.querySelector("#table-rows").innerHTML =
+      sanitizeStringWithTableRows(tableRows);
   } catch (err) {
-    console.log(err.message);
+    document.getElementById("error").innerText = err.message;
   }
 }
 

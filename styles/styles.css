@@ -5,7 +5,7 @@ Styles used for labels and input fields in boot strap columns
 */
 
 .row label {
-  margin-top: 1.5em;
+ /* margin-top: 1.5em; */
   vertical-align: middle;
   text-align: right;
 }
