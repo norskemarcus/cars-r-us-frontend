@@ -14,6 +14,7 @@ export function logout() {
 
 async function login() {
   document.getElementById("error").innerText = "";
+  localStorage.clear();
 
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
@@ -26,17 +27,14 @@ async function login() {
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(userDto),
   };
+
   try {
     const response = await fetch(URL, options).then((res) =>
       handleHttpErrors(res)
     );
     localStorage.setItem("user", response.username);
     localStorage.setItem("token", response.token);
-
-    // Forsøg på at rollen kun bliver sat én gang:
-
     localStorage.setItem("roles", response.roles);
-    console.log(response.roles);
 
     displayLoginStatus();
     window.router.navigate("");
@@ -56,7 +54,7 @@ function displayLoginStatus() {
   }
 
   const username = localStorage.getItem("user");
-  const loginLink = document.getElementById("login-link");
+  //const loginLink = document.getElementById("login-link");
   // const signUpLink = document.getElementById("signup-link");
 
   // Check if the user is logged in
@@ -73,7 +71,7 @@ function displayLoginStatus() {
     document.getElementById("logout-id").style.display = "none";
     document.getElementById("login-id").style.display = "block";
     document.getElementById("login-name").style.display = "none";
-    // document.getElementById("signup-link").style.display = "block";
+    document.getElementById("signup-link").style.display = "block";
     document.getElementById("reservations-link").style.display = "none";
   }
 }

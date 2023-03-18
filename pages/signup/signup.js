@@ -42,11 +42,13 @@ async function addMember() {
   try {
     await fetch(URL, options);
 
+    localStorage.setItem("roles", "USER");
+
     // Form element, reset
     document.querySelector("#form").reset();
 
     // Respons til bruger om at bruger er oprettet!
-    document.querySelector("#new-user").innerText =
+    document.querySelector("#new-member").innerText =
       "Member is successfully created ";
 
     window.router.navigate("");

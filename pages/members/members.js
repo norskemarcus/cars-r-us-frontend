@@ -14,7 +14,7 @@ export function initMembers() {
   //filterMembersByEmail();
 }
 
-async function filterMembersByUsername() {
+/* async function filterMembersByUsername() {
   const membersTable = document.getElementById("members-table");
   const usernameInput = document.getElementById("username-input");
 
@@ -73,6 +73,7 @@ async function filterMembersByEmail() {
   );
   tableBody.innerHTML = tableRows.join("");
 }
+ */
 
 async function getAllMembers() {
   const options = makeOptionsWithToken("GET", null, true);

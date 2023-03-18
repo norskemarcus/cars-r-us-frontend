@@ -13,10 +13,10 @@ export function initCars() {
 
   document.querySelector("#table-rows").onclick = showCarDetails;
 
-  filterCarsByBrand();
-  document
+  // filterCarsByBrand();
+  /*  document
     .getElementById("filtering-cars-by-brand")
-    .addEventListener("input", filterCarsByBrand);
+    .addEventListener("input", filterCarsByBrand); */
 }
 
 async function getAllCars() {
@@ -54,7 +54,7 @@ async function getAllCars() {
   }
 }
 
-async function filterCarsByBrand() {
+/* async function filterCarsByBrand() {
   const carsTable = document.getElementById("cars-table");
   const brandInput = document.getElementById("filtering-cars-by-brand");
 
@@ -85,7 +85,7 @@ async function filterCarsByBrand() {
   );
 
   tableBody.innerHTML = tableRows.join("");
-}
+} */
 
 function makeTable(data) {
   const tableRows = data.map(

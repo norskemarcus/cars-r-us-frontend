@@ -15,9 +15,7 @@ export async function fetchAllReservations() {
   try {
     const options = makeOptionsWithToken("GET", null, true);
 
-    const reservations = await fetch(API_URL + "/reservations", options).then(
-      handleHttpErrors
-    );
+    const reservations = await fetch(URL, options).then(handleHttpErrors);
 
     document.querySelector("#user-reservation").innerText =
       localStorage.getItem("user");
@@ -42,6 +40,26 @@ export async function fetchAllReservations() {
             </tr>`;
       })
       .join("\n");
+
+    /*   const carsAdmin = await fetch(API_URL + "/cars/admin", options).then(
+      handleHttpErrors
+    );
+
+    const carMapAdmin = new Map(carsAdmin.map((car) => [car.id, car]));
+
+    const tableRowsAdmin = reservations
+      .map((reservation) => {
+        const car = carMapAdmin.get(reservation.carId);
+        return `
+              <tr>
+              <!--  <td>${reservation.carId}</td>  -->
+              <td>${reservation.rentalDate}</td>
+              <td>${car.brand}</td>
+              <td>${car.model}</td>
+              <td>${car.pricePrDay}</td>
+              </tr>`;
+      })
+      .join("\n"); */
 
     document.querySelector("#tablerows").innerHTML =
       sanitizeStringWithTableRows(tableRows);
