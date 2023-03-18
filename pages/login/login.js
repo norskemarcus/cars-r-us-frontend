@@ -34,10 +34,8 @@ async function login() {
     localStorage.setItem("token", response.token);
 
     // Forsøg på at rollen kun bliver sat én gang:
-    if (!response.roles) {
-      localStorage.setItem("roles", response.roles);
-    }
 
+    localStorage.setItem("roles", response.roles);
     console.log(response.roles);
 
     displayLoginStatus();
@@ -59,7 +57,7 @@ function displayLoginStatus() {
 
   const username = localStorage.getItem("user");
   const loginLink = document.getElementById("login-link");
-  const signUpLink = document.getElementById("signup-link");
+  // const signUpLink = document.getElementById("signup-link");
 
   // Check if the user is logged in
   if (username) {
@@ -70,12 +68,12 @@ function displayLoginStatus() {
     document.getElementById("login-id").style.display = "none";
 
     // Remove the sign up link from the nav bar
-    signUpLink.parentNode.removeChild(signUpLink);
+    // signUpLink.parentNode.removeChild(signUpLink);
   } else {
     document.getElementById("logout-id").style.display = "none";
     document.getElementById("login-id").style.display = "block";
     document.getElementById("login-name").style.display = "none";
-    document.getElementById("signup-link").style.display = "block";
+    // document.getElementById("signup-link").style.display = "block";
     document.getElementById("reservations-link").style.display = "none";
   }
 }
