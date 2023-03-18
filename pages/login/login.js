@@ -34,7 +34,7 @@ async function login() {
     localStorage.setItem("token", response.token);
 
     // Forsøg på at rollen kun bliver sat én gang:
-    if (response.roles) {
+    if (!response.roles) {
       localStorage.setItem("roles", response.roles);
     }
 
@@ -47,8 +47,7 @@ async function login() {
   }
 }
 
-// This function shows the username if a user is logged in
-
+// What about a timer to inactive the token and the logged in display?
 window.onload = displayLoginStatus;
 
 function displayLoginStatus() {
@@ -66,9 +65,10 @@ function displayLoginStatus() {
   if (username) {
     document.getElementById("span-id").textContent = username;
     document.getElementById("login-name").style.display = "block";
-
+    document.getElementById("reservations-link").style.display = "block";
     document.getElementById("logout-id").style.display = "block";
     document.getElementById("login-id").style.display = "none";
+
     // Remove the sign up link from the nav bar
     signUpLink.parentNode.removeChild(signUpLink);
   } else {

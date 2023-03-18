@@ -27,14 +27,14 @@ async function addMember() {
   const zip = document.querySelector("#input-zip").value;
 
   const body = {
-    username: username,
-    email: email,
-    password: password,
-    firstName: firstName,
-    lastName: lastName,
-    street: street,
-    city: city,
-    zip: zip,
+    username,
+    email,
+    password,
+    firstName,
+    lastName,
+    street,
+    city,
+    zip,
   };
 
   const options = makeOptions("POST", body);
@@ -48,6 +48,8 @@ async function addMember() {
     // Respons til bruger om at bruger er oprettet!
     document.querySelector("#new-user").innerText =
       "Member is successfully created ";
+
+    window.router.navigate("");
   } catch (err) {
     document.querySelector("#error").innerText =
       "Something went wrong. Try again or contact us";

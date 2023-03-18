@@ -100,7 +100,7 @@ window.addEventListener("load", async () => {
 });
 
 window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
-  alert(
+  console.log(
     "Error: " +
       errorMsg +
       " Script: " +
