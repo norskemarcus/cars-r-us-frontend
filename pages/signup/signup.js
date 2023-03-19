@@ -44,12 +44,12 @@ async function addMember() {
 
     localStorage.setItem("roles", "USER");
 
-    // Form element, reset
-    document.querySelector("#form").reset();
-
     // Respons til bruger om at bruger er oprettet!
     document.querySelector("#new-member").innerText =
       "Member is successfully created ";
+
+    // Form element, reset
+    document.querySelector("#form").reset();
 
     window.router.navigate("");
   } catch (err) {

@@ -8,12 +8,13 @@ import {
 const URL = API_URL + "/reservations";
 
 export async function initListReservationsAll() {
-  fetchAllReservations();
+  await fetchAllReservations();
 }
 
-export async function fetchAllReservations() {
+async function fetchAllReservations() {
   try {
     const options = makeOptionsWithToken("GET", null, true);
+    // const options2 = makeOptionsWithToken("GET", null, true);
 
     const reservations = await fetch(URL, options).then(handleHttpErrors);
 
@@ -24,7 +25,6 @@ export async function fetchAllReservations() {
       handleHttpErrors
     );
 
-    // Create a map of car id to car object
     const carMap = new Map(cars.map((car) => [car.id, car]));
 
     const tableRows = reservations
@@ -32,7 +32,6 @@ export async function fetchAllReservations() {
         const car = carMap.get(reservation.carId);
         return `
             <tr>
-            <!--  <td>${reservation.carId}</td>  -->
             <td>${reservation.rentalDate}</td>
             <td>${car.brand}</td>
             <td>${car.model}</td>
@@ -40,26 +39,6 @@ export async function fetchAllReservations() {
             </tr>`;
       })
       .join("\n");
-
-    /*   const carsAdmin = await fetch(API_URL + "/cars/admin", options).then(
-      handleHttpErrors
-    );
-
-    const carMapAdmin = new Map(carsAdmin.map((car) => [car.id, car]));
-
-    const tableRowsAdmin = reservations
-      .map((reservation) => {
-        const car = carMapAdmin.get(reservation.carId);
-        return `
-              <tr>
-              <!--  <td>${reservation.carId}</td>  -->
-              <td>${reservation.rentalDate}</td>
-              <td>${car.brand}</td>
-              <td>${car.model}</td>
-              <td>${car.pricePrDay}</td>
-              </tr>`;
-      })
-      .join("\n"); */
 
     document.querySelector("#tablerows").innerHTML =
       sanitizeStringWithTableRows(tableRows);

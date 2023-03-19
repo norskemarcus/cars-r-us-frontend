@@ -119,7 +119,7 @@ async function showMemberDetails(evt) {
 
       document
         .querySelectorAll(".property")
-        .forEach((field) => (field.innerText = member[field.dataset.property])); // kan også være value
+        .forEach((field) => (field.innerText = member[field.dataset.property]));
     } catch (error) {
       alert(error.message);
     }

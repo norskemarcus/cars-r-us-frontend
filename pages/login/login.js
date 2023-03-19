@@ -18,8 +18,6 @@ async function login() {
 
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-
-  //const userDto = {username:username,password:password}
   const userDto = { username, password };
 
   const options = {
@@ -54,8 +52,8 @@ function displayLoginStatus() {
   }
 
   const username = localStorage.getItem("user");
-  //const loginLink = document.getElementById("login-link");
-  // const signUpLink = document.getElementById("signup-link");
+  const loginLink = document.getElementById("login-link");
+   const signUpLink = document.getElementById("signup-link");
 
   // Check if the user is logged in
   if (username) {
@@ -66,7 +64,7 @@ function displayLoginStatus() {
     document.getElementById("login-id").style.display = "none";
 
     // Remove the sign up link from the nav bar
-    // signUpLink.parentNode.removeChild(signUpLink);
+     signUpLink.parentNode.removeChild(signUpLink);
   } else {
     document.getElementById("logout-id").style.display = "none";
     document.getElementById("login-id").style.display = "block";
